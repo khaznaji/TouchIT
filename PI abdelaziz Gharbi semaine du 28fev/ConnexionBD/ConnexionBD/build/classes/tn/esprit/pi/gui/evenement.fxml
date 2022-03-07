@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17" fx:controller="tn.esprit.pi.gui.EvenementController">
+    <children>
+      <AnchorPane id="AnchorPane" fx:id="comborole" accessibleRole="COMBO_BOX" layoutX="10.0" layoutY="10.0" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f8eadc;">
+         <styleClass>
+            <String fx:value="admin" />
+            <String fx:value="coach" />
+            <String fx:value="abonné" />
+         </styleClass>
+         <children>
+            <AnchorPane layoutX="56.0" layoutY="38.0" prefHeight="544.0" prefWidth="576.0" style="-fx-background-color: #f8eadc;" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="47.0">
+               <children>
+                  <AnchorPane layoutX="20.0" layoutY="55.0" maxWidth="294.0" prefHeight="378.0" prefWidth="350.0" style="-fx-background-color: #f8eadc;" AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="55.0">
+                     <children>
+                        <TableView fx:id="tab" layoutX="370.0" layoutY="82.0" onMouseClicked="#getSelected" prefHeight="228.0" prefWidth="303.0" style="-fx-background-color: #f8eadc;">
+                           <columns>
+                              <TableColumn fx:id="colnom" prefWidth="75.0" text="nom" />
+                              <TableColumn fx:id="coltype" prefWidth="75.0" text="type" />
+                              <TableColumn fx:id="collieu" prefWidth="75.0" text="lieu" />
+                              <TableColumn fx:id="coldate" prefWidth="75.0" text="date" />
+                           </columns>
+                        </TableView>
+                        <TextField fx:id="tfnom" layoutX="36.0" layoutY="97.0" promptText="nom" style="-fx-background-radius: 1em;" />
+                        <TextField fx:id="tftype" layoutX="37.0" layoutY="139.0" promptText="type" style="-fx-background-radius: 1em;" />
+                        <Button fx:id="btajouter" layoutX="6.0" layoutY="337.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="34.0" prefWidth="89.0" style="-fx-background-color: #e08475; -fx-background-radius: 1em;" text="    ajouter" textFill="WHITE" />
+                        <Button fx:id="btmodifier" layoutX="111.0" layoutY="337.0" mnemonicParsing="false" onAction="#modifier" prefHeight="34.0" prefWidth="89.0" style="-fx-background-color: #e08475; -fx-background-radius: 1em;" text="    modifier" textFill="WHITE" />
+                        <Button fx:id="btsupprimer" layoutX="212.0" layoutY="337.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="34.0" prefWidth="96.0" style="-fx-background-color: #e08475; -fx-background-radius: 1em;" text="   supprimer" textFill="WHITE" />
+                        <DatePicker fx:id="tfdate" layoutX="36.0" layoutY="227.0" promptText="date " style="-fx-background-radius: 1em;" />
+                        <Button fx:id="btntridate" layoutX="569.0" layoutY="35.0" mnemonicParsing="false" onAction="#trierDate" style="-fx-background-color: #e08475; -fx-background-radius: 1em;" text="trie date" textFill="WHITE" />
+                        <Button fx:id="btnvideo" layoutX="386.0" layoutY="375.0" mnemonicParsing="false" onAction="#video" text="video" />
+                        <TextField fx:id="tflieu" layoutX="37.0" layoutY="173.0" promptText="lieu" style="-fx-background-radius: 1em;" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+    
+</AnchorPane>
