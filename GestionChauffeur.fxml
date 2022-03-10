@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="660.0" prefWidth="971.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projetpidev5.GestionChauffeurController">
+   <children>
+      <TableView fx:id="tablechauff" layoutX="317.0" layoutY="78.0" onMouseClicked="#Selected" prefHeight="267.0" prefWidth="528.0">
+         <columns>
+            <TableColumn fx:id="noma" prefWidth="103.0" text="nom" />
+            <TableColumn fx:id="prenoma" prefWidth="83.0" text="prenom" />
+            <TableColumn fx:id="sexea" prefWidth="96.0" text="sexe" />
+            <TableColumn fx:id="numtela" prefWidth="120.0" text="numtel" />
+            <TableColumn fx:id="dispoa" prefWidth="124.0" text="dispochauff" />
+         </columns>
+      </TableView>
+      <TextField fx:id="tfnom" layoutX="53.0" layoutY="99.0" promptText="veuillez saisir le nom" />
+      <TextField fx:id="tfprenom" layoutX="53.0" layoutY="161.0" promptText="veuillez saisir le prenom" />
+      <TextField fx:id="tfsexe" layoutX="53.0" layoutY="220.0" promptText="veuillez saisir le sexe" />
+      <TextField fx:id="tfnumtel" layoutX="53.0" layoutY="284.0" promptText="veuillez saisir le numtel" />
+      <Button layoutX="137.0" layoutY="423.0" mnemonicParsing="false" onAction="#ajouterchauffeur" text="ajouter" textFill="#ed705a" />
+      <Button layoutX="317.0" layoutY="426.0" mnemonicParsing="false" onAction="#supprimerchauffeur" text="supprimer" textFill="#da7d20" />
+      <Button fx:id="btnmodifier" layoutX="538.0" layoutY="426.0" mnemonicParsing="false" onAction="#modifierchauffeur" text="modifier" textFill="#c78c4c" />
+      <Button fx:id="btnretour" layoutX="413.0" layoutY="527.0" mnemonicParsing="false" onAction="#retour" text="retour" textFill="#d98609" />
+      <ImageView fitHeight="43.0" fitWidth="43.0" layoutX="210.0" layoutY="421.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../Desktop/ajout.PNG" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="42.0" fitWidth="43.0" layoutX="412.0" layoutY="421.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../Desktop/suppr.PNG" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="42.0" fitWidth="43.0" layoutX="623.0" layoutY="421.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../Desktop/modif.PNG" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="42.0" fitWidth="50.0" layoutX="481.0" layoutY="527.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../Desktop/retour.PNG" />
+         </image>
+      </ImageView>
+      <Label layoutX="41.0" layoutY="20.0" prefHeight="58.0" prefWidth="211.0" text="gestion des chauffeurs" textFill="#0b07f2">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="41.0" layoutY="496.0" mnemonicParsing="false" onAction="#calcul" text="stat" />
+      <Button fx:id="btnclose" layoutX="598.0" layoutY="512.0" mnemonicParsing="false" onAction="#closeapp" text="close" />
+      <TextField fx:id="tfdispo" layoutX="53.0" layoutY="330.0" promptText="veuillez saisir la dispo" />
+      <TextField fx:id="recherche_text" layoutX="320.0" layoutY="27.0" />
+      <Button layoutX="128.0" layoutY="586.0" mnemonicParsing="false" onAction="#openPDF" text="Button" />
+   </children>
+</AnchorPane>
