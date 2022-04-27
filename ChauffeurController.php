@@ -9,6 +9,10 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Chauffeur;
 use App\Form\ChauffeurType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use MercurySeries\FlashyBundle\FlashyNotifier;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use App\Repository\ChauffeurRepository;
 
 class ChauffeurController extends AbstractController
 {
@@ -39,8 +43,10 @@ class ChauffeurController extends AbstractController
      /**
      * @Route("/frontC", name="frontC")
      */
-    public function frontC(): Response
-    {
+    public function frontC(): Response {
+               
+    
+    
         //rÃ©cupÃ©rer le repository pour utiliser la fonction findAll
         $r=$this->getDoctrine()->getRepository(Chauffeur::class);
         //faire appel Ã  la fonction findAll()
@@ -54,7 +60,7 @@ class ChauffeurController extends AbstractController
      /**
      * @Route("/supp/{id}", name="suppC")
      */
-    public function supp($id): Response
+    public function supp($id,FlashyNotifier $flashy): Response
 
     {
         //récupérer le classroom à supprimer
@@ -63,6 +69,9 @@ class ChauffeurController extends AbstractController
         $em=$this->getDoctrine()->getManager();
         $em->remove($chauffeur);
         $em->flush();
+        $this->get('session')->getFlashBag()->add('notice','Ajout Avec Succés');
+        $flashy->success('chauffeur created!', 'http://your-awesome-link.com
+        ');
 
         return $this->redirectToRoute('afficheC');
     }
@@ -70,7 +79,7 @@ class ChauffeurController extends AbstractController
     /**
      * @Route("/ajoutC", name="ajoutC")
      */
-    public function ajoutC(Request $request): Response
+    public function ajoutC(Request $request,FlashyNotifier $flashy): Response
     {
         //crÃ©ation du formulaire
 
@@ -83,6 +92,10 @@ class ChauffeurController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($c);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('notice','Ajout Avec Succés');
+
+            $flashy->success('chauffeur created!', 'http://your-awesome-link.com
+');
             
 
             return $this->redirectToRoute('ajoutC');
@@ -105,7 +118,7 @@ class ChauffeurController extends AbstractController
         $form=$this->createForm(ChauffeurType::class,$chauffeur);
         //rÃ©cupÃ©rer les donnÃ©es saisies depuis la requete http
         $form->handleRequest($request);
-        if($form->isSubmitted())
+        if($form->isSubmitted()&& $form->isValid())
         {
             $em=$this->getDoctrine()->getManager();
 
@@ -117,5 +130,52 @@ class ChauffeurController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/listC", name="chauffeur_list")
+     */
+    public function listC(ChauffeurRepository $chauffeurRepository): Response
+    {
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+//rÃ©cupÃ©rer le repository pour utiliser la fonction findAll
+        $chauffeurRepository= $this->getDoctrine()->getRepository(Chauffeur::class);
+        //faire appel Ã  la fonction findAll()
+        $chauffeur = $chauffeurRepository->findAll();
+
+        //ou $r=$this->getDoctrine()->getRepository(Classroom::class)->findAll();
+
+
+    // Retrieve the HTML generated in our twig file
+$html = $this->renderView('chauffeur/listC.html.twig', ['c' => $chauffeur,]);
+
+    // Load HTML to Dompdf
+$dompdf->loadHtml($html);
+
+    // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+$dompdf->setPaper('A4', 'portrait');
+
+    // Render the HTML as PDF
+$dompdf->render();
+
+    // Output the generated PDF to Browser (force download)
+$dompdf->stream("mypdf.pdf", ["Attachment" => false]);
+        return new Response("The PDF file has been succesfully generated !");
+}
+    /**
+     * @Route("/TrierParNom", name="TrierParNom")
+     */
+    public function TrierParNom(Request $request): Response
+    {
+        $repository = $this->getDoctrine()->getRepository(Chauffeur::class);
+        $chauffeur = $repository->findByNom();
+
+        return $this->render('chauffeur/afficheC.html.twig', [
+            'c' =>  $chauffeur,
+        ]);
+    }
+
     
 }

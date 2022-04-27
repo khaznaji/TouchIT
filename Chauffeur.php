@@ -3,10 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\ChauffeurRepository;
-use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ChauffeurRepository::class)
@@ -22,19 +22,19 @@ class Chauffeur
 
     /**
      * @ORM\Column(type="string", length=255)
-     *   * @Assert\Length(
-     *      min = 4,
-     *      max = 20,
-     *      minMessage = "Your name must be at least {{ limit }} characters long",
-     *      maxMessage = "Your  name cannot be longer than {{ limit }} characters",
-     *      allowEmptyString = false
+     *  @Assert\NotBlank(message="Le Champ Titre est obligatoire")
+     * @Assert\Length(
+     *     min=5,
+     *     max=50,
+     *     minMessage="Le titre doit contenir au moins 5 carcatères ",
+     *     maxMessage="Le titre doit contenir au plus 20 carcatères"
      * )
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
-     *  @Assert\NotBlank(message="Le Champ Titre est obligatoire")
+      *  @Assert\NotBlank(message="Le Champ Titre est obligatoire")
      * @Assert\Length(
      *     min=5,
      *     max=50,
@@ -46,19 +46,19 @@ class Chauffeur
 
     /**
      * @ORM\Column(type="string", length=255)
-     *  @Assert\NotBlank(message="Le Champ Titre est obligatoire")
-     * @Assert\Length(
-     *     min=5,
-     *     max=50,
-     *     minMessage="Le titre doit contenir au moins 5 carcatères ",
-     *     maxMessage="Le titre doit contenir au plus 20 carcatères"
+      * @Assert\Length(
+     *      min = 4,
+     *      max = 20,
+     *      minMessage = "Your name must be at least {{ limit }} characters long",
+     *      maxMessage = "Your  name cannot be longer than {{ limit }} characters",
+     *      allowEmptyString = false
      * )
      */
     private $sexe;
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\NotEqualTo(
+      * @Assert\NotEqualTo(
      *     value = 0
      *     )
      */
@@ -68,24 +68,29 @@ class Chauffeur
      * @ORM\Column(type="string", length=255)
      *  @Assert\NotBlank(message="Le Champ Titre est obligatoire")
      * @Assert\Length(
-     *     min=5,
+     *     min=3,
      *     max=50,
-     *     minMessage="Le titre doit contenir au moins 5 carcatères ",
+     *     minMessage="Le titre doit contenir au moins 3 carcatères ",
      *     maxMessage="Le titre doit contenir au plus 20 carcatères"
      * )
      */
     private $disponibilite;
 
     /**
-     * @ORM\OneToMany(targetEntity=Location::class, mappedBy="chauffeur")
+     * @ORM\OneToMany(targetEntity=Location::class, mappedBy="nom")
      */
     private $location;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Locationc::class, mappedBy="Chauffeur")
+     */
+    private $locationcs;
 
     public function __construct()
     {
         $this->location = new ArrayCollection();
+        $this->locationcs = new ArrayCollection();
     }
-    
 
     public function getId(): ?int
     {
@@ -164,7 +169,7 @@ class Chauffeur
     {
         if (!$this->location->contains($location)) {
             $this->location[] = $location;
-            $location->setChauffeur($this);
+            $location->setNom($this);
         }
 
         return $this;
@@ -174,8 +179,38 @@ class Chauffeur
     {
         if ($this->location->removeElement($location)) {
             // set the owning side to null (unless already changed)
-            if ($location->getChauffeur() === $this) {
-                $location->setChauffeur(null);
+            if ($location->getNom() === $this) {
+                $location->setNom(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Locationc>
+     */
+    public function getLocationcs(): Collection
+    {
+        return $this->locationcs;
+    }
+
+    public function addLocationc(Locationc $locationc): self
+    {
+        if (!$this->locationcs->contains($locationc)) {
+            $this->locationcs[] = $locationc;
+            $locationc->setChauffeur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLocationc(Locationc $locationc): self
+    {
+        if ($this->locationcs->removeElement($locationc)) {
+            // set the owning side to null (unless already changed)
+            if ($locationc->getChauffeur() === $this) {
+                $locationc->setChauffeur(null);
             }
         }
 
